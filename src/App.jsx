@@ -86,11 +86,6 @@ export default function App() {
             <span className="mr-2">▸</span> How each persona is structured
           </summary>
           <div className="px-4 pb-4 pt-1">
-            <p className="text-slate-700" style={{ fontSize: '14px', lineHeight: 1.6, marginBottom: '12px' }}>
-              Each persona is analyzed across two dimensions: whose perspective the card takes
-              (customer or Nitra) and the type of content (descriptive facts vs. dialogue/interaction).
-              The four cards each sit in one quadrant.
-            </p>
             <div className="grid grid-cols-[110px_1fr_1fr] gap-px bg-slate-200 rounded-md overflow-hidden text-xs">
               <div className="bg-white p-2"></div>
               <div className="bg-white p-2 uppercase tracking-wide text-slate-500 text-center">Descriptive</div>
@@ -372,11 +367,7 @@ export default function App() {
 
         {/* Footer */}
         <footer className="border-t border-slate-200 pt-8">
-          <p className="text-sm text-slate-600 mb-1">Built by Sam Lee — April 2026</p>
-          <p className="text-sm text-slate-600 mb-4">
-            Native Japanese speaker with healthcare sales and marketing experience across Japan
-            (J&J, Medical Geek). Available to support APAC market expansion.
-          </p>
+          <p className="text-sm text-slate-600 mb-4">Built by Sam Lee — April 2026</p>
           <p className="text-xs text-slate-400 leading-relaxed">
             Portfolio content based on publicly available information and industry research.
             Assumptions are noted where applicable.
