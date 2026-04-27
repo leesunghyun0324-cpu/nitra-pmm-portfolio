@@ -3,6 +3,39 @@ import { PERSONAS, COMPETITIVE, SCENARIOS, PITCHES } from './data.js'
 
 const NAVY = '#1e3a5f'
 
+const CARD_TYPES = {
+  profile:     { icon: '🏥', accent: '#64748b', bg: '#f8fafc', title: 'Practice Profile' },
+  pain:        { icon: '⚠️', accent: '#dc2626', bg: '#fef2f2', title: 'Key Pain Points' },
+  positioning: { icon: '🎯', accent: '#2563eb', bg: '#eff6ff', title: 'Nitra Product Positioning' },
+  objection:   { icon: '💬', accent: '#16a34a', bg: '#f0fdf4', title: 'Objection Handling' },
+}
+
+function PersonaCard({ type, children }) {
+  const t = CARD_TYPES[type]
+  return (
+    <div
+      className="rounded-lg shadow-sm"
+      style={{
+        backgroundColor: t.bg,
+        borderLeft: `4px solid ${t.accent}`,
+        padding: '24px',
+        lineHeight: 1.6,
+      }}
+    >
+      <h3
+        className="uppercase font-bold mb-3 flex items-center gap-2"
+        style={{ color: t.accent, fontSize: '0.78rem', letterSpacing: '0.06em' }}
+      >
+        <span style={{ fontSize: '1.1rem' }} aria-hidden="true">{t.icon}</span>
+        {t.title}
+      </h3>
+      <div className="text-sm text-slate-700" style={{ lineHeight: 1.6 }}>
+        {children}
+      </div>
+    </div>
+  )
+}
+
 function YesNo({ value }) {
   const isYes = value.startsWith('Yes')
   return (
@@ -44,6 +77,43 @@ export default function App() {
           </p>
         </div>
 
+        {/* Orientation: How to read these personas (collapsed by default) */}
+        <details className="mb-6 bg-white rounded-lg border border-slate-200 shadow-sm">
+          <summary
+            className="cursor-pointer px-4 py-3 text-sm font-medium text-slate-700 select-none"
+            style={{ listStyle: 'none' }}
+          >
+            <span className="mr-2">▸</span> How to read these personas
+          </summary>
+          <div className="px-4 pb-4 pt-1">
+            <div className="grid grid-cols-[110px_1fr_1fr] gap-px bg-slate-200 rounded-md overflow-hidden text-xs">
+              <div className="bg-white p-2"></div>
+              <div className="bg-white p-2 uppercase tracking-wide text-slate-500 text-center">Descriptive</div>
+              <div className="bg-white p-2 uppercase tracking-wide text-slate-500 text-center">Dialogue</div>
+
+              <div className="bg-white p-2 uppercase tracking-wide text-slate-500 flex items-center">Customer-side</div>
+              <div className="p-2 flex items-center gap-2" style={{ backgroundColor: CARD_TYPES.profile.bg }}>
+                <span aria-hidden="true">{CARD_TYPES.profile.icon}</span>
+                <span style={{ color: CARD_TYPES.profile.accent }} className="font-semibold">Practice Profile</span>
+              </div>
+              <div className="p-2 flex items-center gap-2" style={{ backgroundColor: CARD_TYPES.pain.bg }}>
+                <span aria-hidden="true">{CARD_TYPES.pain.icon}</span>
+                <span style={{ color: CARD_TYPES.pain.accent }} className="font-semibold">Key Pain Points</span>
+              </div>
+
+              <div className="bg-white p-2 uppercase tracking-wide text-slate-500 flex items-center">Nitra-side</div>
+              <div className="p-2 flex items-center gap-2" style={{ backgroundColor: CARD_TYPES.positioning.bg }}>
+                <span aria-hidden="true">{CARD_TYPES.positioning.icon}</span>
+                <span style={{ color: CARD_TYPES.positioning.accent }} className="font-semibold">Product Positioning</span>
+              </div>
+              <div className="p-2 flex items-center gap-2" style={{ backgroundColor: CARD_TYPES.objection.bg }}>
+                <span aria-hidden="true">{CARD_TYPES.objection.icon}</span>
+                <span style={{ color: CARD_TYPES.objection.accent }} className="font-semibold">Objection Handling</span>
+              </div>
+            </div>
+          </div>
+        </details>
+
         {/* Persona Selector */}
         <div className="flex gap-2 mb-8 flex-wrap">
           {PERSONAS.map((p, i) => (
@@ -72,59 +142,97 @@ export default function App() {
           ))}
         </div>
 
-        {/* Persona Content — 2×2 grid */}
-        <div className="grid grid-cols-2 gap-5 mb-14">
+        {/* Persona Content — 2×2 grid with row labels */}
+        <div className="mb-14">
 
-          {/* Panel A: Practice Profile */}
-          <div className="bg-white rounded-lg border border-slate-200 shadow-sm p-6">
-            <h2 className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: NAVY }}>
-              Practice Profile
-            </h2>
-            <p className="text-sm text-slate-700 leading-relaxed">{persona.profile}</p>
+          {/* Row 1 label */}
+          <div className="mb-3">
+            <div className="flex items-baseline gap-3 flex-wrap">
+              <span className="uppercase font-medium text-slate-700" style={{ fontSize: '16px', letterSpacing: '0.04em' }}>
+                <span aria-hidden="true" className="mr-1.5">👥</span>THE CUSTOMER
+              </span>
+              <span className="italic text-slate-500" style={{ fontSize: '14px' }}>
+                Who they are · What hurts
+              </span>
+            </div>
+            <div className="mt-2 border-t border-slate-200" />
           </div>
 
-          {/* Panel B: Key Pain Points */}
-          <div className="bg-white rounded-lg border border-slate-200 shadow-sm p-6">
-            <h2 className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: NAVY }}>
-              Key Pain Points
-            </h2>
-            <ul className="space-y-0 divide-y divide-slate-100">
-              {persona.painPoints.map((pt, i) => (
-                <li key={i} className="py-2.5 text-sm text-slate-700 leading-relaxed first:pt-0 last:pb-0">
-                  {pt}
-                </li>
-              ))}
-            </ul>
+          {/* Row 1: Profile + Pain */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <PersonaCard type="profile">
+              <p>{persona.profile}</p>
+            </PersonaCard>
+
+            <PersonaCard type="pain">
+              <ul className="list-none p-0 m-0">
+                {persona.painPoints.map((pt, i) => (
+                  <li
+                    key={i}
+                    className="flex gap-3"
+                    style={{ marginBottom: i === persona.painPoints.length - 1 ? 0 : '12px' }}
+                  >
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        color: CARD_TYPES.pain.accent,
+                        fontSize: '0.7rem',
+                        lineHeight: '1.6',
+                        marginTop: '2px',
+                      }}
+                    >●</span>
+                    <span style={{ flex: 1 }}>{pt}</span>
+                  </li>
+                ))}
+              </ul>
+            </PersonaCard>
           </div>
 
-          {/* Panel C: Nitra Product Positioning */}
-          <div className="bg-white rounded-lg border border-slate-200 shadow-sm p-6">
-            <h2 className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: NAVY }}>
-              Nitra Product Positioning — Lead With
-            </h2>
-            <ul className="space-y-4">
-              {persona.positioning.map((item, i) => (
-                <li key={i} className="text-sm text-slate-700 leading-relaxed">
-                  <span className="font-semibold text-slate-900">{item.product}: </span>
-                  {item.description}
-                </li>
-              ))}
-            </ul>
+          {/* Row 2 label */}
+          <div className="mb-3">
+            <div className="flex items-baseline gap-3 flex-wrap">
+              <span className="uppercase font-medium text-slate-700" style={{ fontSize: '16px', letterSpacing: '0.04em' }}>
+                <span aria-hidden="true" className="mr-1.5">🏢</span>NITRA'S RESPONSE
+              </span>
+              <span className="italic text-slate-500" style={{ fontSize: '14px' }}>
+                What we offer · How we handle pushback
+              </span>
+            </div>
+            <div className="mt-2 border-t border-slate-200" />
           </div>
 
-          {/* Panel D: Objection Handling */}
-          <div className="bg-white rounded-lg border border-slate-200 shadow-sm p-6">
-            <h2 className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: NAVY }}>
-              Objection Handling
-            </h2>
-            <ul className="space-y-5">
-              {persona.objections.map((item, i) => (
-                <li key={i}>
-                  <p className="text-sm italic text-slate-500 mb-1.5">{item.objection}</p>
-                  <p className="text-sm text-slate-700 leading-relaxed">{item.response}</p>
-                </li>
-              ))}
-            </ul>
+          {/* Row 2: Positioning + Objection */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <PersonaCard type="positioning">
+              <ul className="list-none p-0 m-0 space-y-4">
+                {persona.positioning.map((item, i) => (
+                  <li key={i}>
+                    <span
+                      className="inline-block rounded-full text-white font-medium mb-1.5"
+                      style={{
+                        backgroundColor: CARD_TYPES.positioning.accent,
+                        fontSize: '14px',
+                        padding: '4px 12px',
+                      }}
+                    >
+                      {item.product}
+                    </span>
+                    <p>{item.description}</p>
+                  </li>
+                ))}
+              </ul>
+            </PersonaCard>
+
+            <PersonaCard type="objection">
+              <ul className="list-none p-0 m-0 space-y-5">
+                {persona.objections.map((item, i) => (
+                  <li key={i}>
+                    <p className="italic text-slate-500 mb-1.5">{item.objection}</p>
+                    <p>{item.response}</p>
+                  </li>
+                ))}
+              </ul>
+            </PersonaCard>
           </div>
 
         </div>
