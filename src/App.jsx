@@ -97,23 +97,27 @@ export default function App() {
               <div className="bg-white p-2 uppercase tracking-wide text-slate-500 text-center">Dialogue</div>
 
               <div className="bg-white p-2 uppercase tracking-wide text-slate-500 flex items-center">Customer-side</div>
-              <div className="p-2 flex items-center gap-2" style={{ backgroundColor: CARD_TYPES.profile.bg }}>
+              <div className="p-2 flex items-center gap-2 flex-wrap" style={{ backgroundColor: CARD_TYPES.profile.bg }}>
                 <span aria-hidden="true">{CARD_TYPES.profile.icon}</span>
                 <span style={{ color: CARD_TYPES.profile.accent }} className="font-semibold">Practice Profile</span>
+                <span className="italic text-slate-400" style={{ fontSize: '0.7rem' }}>— who they are</span>
               </div>
-              <div className="p-2 flex items-center gap-2" style={{ backgroundColor: CARD_TYPES.pain.bg }}>
+              <div className="p-2 flex items-center gap-2 flex-wrap" style={{ backgroundColor: CARD_TYPES.pain.bg }}>
                 <span aria-hidden="true">{CARD_TYPES.pain.icon}</span>
                 <span style={{ color: CARD_TYPES.pain.accent }} className="font-semibold">Key Pain Points</span>
+                <span className="italic text-slate-400" style={{ fontSize: '0.7rem' }}>— what hurts</span>
               </div>
 
               <div className="bg-white p-2 uppercase tracking-wide text-slate-500 flex items-center">Nitra-side</div>
-              <div className="p-2 flex items-center gap-2" style={{ backgroundColor: CARD_TYPES.positioning.bg }}>
+              <div className="p-2 flex items-center gap-2 flex-wrap" style={{ backgroundColor: CARD_TYPES.positioning.bg }}>
                 <span aria-hidden="true">{CARD_TYPES.positioning.icon}</span>
                 <span style={{ color: CARD_TYPES.positioning.accent }} className="font-semibold">Product Positioning</span>
+                <span className="italic text-slate-400" style={{ fontSize: '0.7rem' }}>— what we offer</span>
               </div>
-              <div className="p-2 flex items-center gap-2" style={{ backgroundColor: CARD_TYPES.objection.bg }}>
+              <div className="p-2 flex items-center gap-2 flex-wrap" style={{ backgroundColor: CARD_TYPES.objection.bg }}>
                 <span aria-hidden="true">{CARD_TYPES.objection.icon}</span>
                 <span style={{ color: CARD_TYPES.objection.accent }} className="font-semibold">Objection Handling</span>
+                <span className="italic text-slate-400" style={{ fontSize: '0.7rem' }}>— how we handle pushback</span>
               </div>
             </div>
           </div>
