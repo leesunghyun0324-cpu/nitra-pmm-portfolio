@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { PERSONAS, COMPETITIVE } from './data.js'
+import { PERSONAS, COMPETITIVE, SCENARIOS, PITCHES } from './data.js'
 
 const NAVY = '#1e3a5f'
 
@@ -14,7 +14,10 @@ function YesNo({ value }) {
 
 export default function App() {
   const [active, setActive] = useState(0)
+  const [scenarioIdx, setScenarioIdx] = useState(0)
   const persona = PERSONAS[active]
+  const scenario = SCENARIOS[scenarioIdx]
+  const pitch = PITCHES[persona.id][scenario.id]
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -179,6 +182,74 @@ export default function App() {
                 ))}
               </tbody>
             </table>
+          </div>
+        </section>
+
+        {/* Sales Enablement — Pitch Builder */}
+        <section className="mb-14">
+          <h2 className="text-xl font-semibold mb-2" style={{ color: NAVY }}>
+            Sales Enablement — Pitch Builder
+          </h2>
+          <p className="text-sm text-slate-500 mb-5 leading-relaxed">
+            Select a scenario to see how outreach messaging adapts for the selected practice
+            segment. Each message reflects the persona-specific pain points and product positioning
+            above.
+          </p>
+
+          {/* Scenario selector — smaller pills, distinct from persona tabs */}
+          <div className="flex gap-2 mb-5 flex-wrap">
+            {SCENARIOS.map((s, i) => (
+              <button
+                key={s.id}
+                onClick={() => setScenarioIdx(i)}
+                className="px-3 py-1.5 rounded-full text-xs font-medium transition-colors cursor-pointer"
+                style={
+                  scenarioIdx === i
+                    ? { backgroundColor: '#dbeafe', color: NAVY, border: `1px solid ${NAVY}` }
+                    : {
+                        backgroundColor: '#ffffff',
+                        color: '#64748b',
+                        border: '1px solid #cbd5e1',
+                      }
+                }
+                onMouseEnter={e => {
+                  if (scenarioIdx !== i) e.currentTarget.style.backgroundColor = '#f1f5f9'
+                }}
+                onMouseLeave={e => {
+                  if (scenarioIdx !== i) e.currentTarget.style.backgroundColor = '#ffffff'
+                }}
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Message preview card */}
+          <div
+            className="bg-slate-50 rounded-md p-6 shadow-sm border border-slate-200"
+            style={{ borderLeft: `4px solid ${NAVY}` }}
+          >
+            {scenario.kind === 'email' ? (
+              <>
+                <p className="text-sm font-semibold text-slate-900 mb-4 pb-3 border-b border-slate-200">
+                  <span className="text-slate-500 font-normal mr-2">Subject:</span>
+                  {pitch.subject}
+                </p>
+                <div className="text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+                  {pitch.body}
+                </div>
+              </>
+            ) : (
+              <blockquote className="text-sm text-slate-700 leading-relaxed italic">
+                <span className="text-slate-400 mr-1">"</span>
+                {pitch.body}
+                <span className="text-slate-400 ml-1">"</span>
+              </blockquote>
+            )}
+
+            <p className="text-xs text-slate-400 mt-5 pt-3 border-t border-slate-200">
+              Persona: {persona.label} &nbsp;|&nbsp; Scenario: {scenario.label}
+            </p>
           </div>
         </section>
 
