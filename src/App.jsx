@@ -83,9 +83,14 @@ export default function App() {
             className="cursor-pointer px-4 py-3 text-sm font-medium text-slate-700 select-none"
             style={{ listStyle: 'none' }}
           >
-            <span className="mr-2">▸</span> How to read these personas
+            <span className="mr-2">▸</span> How each persona is structured
           </summary>
           <div className="px-4 pb-4 pt-1">
+            <p className="text-slate-700" style={{ fontSize: '14px', lineHeight: 1.6, marginBottom: '12px' }}>
+              Each persona is analyzed across two dimensions: whose perspective the card takes
+              (customer or Nitra) and the type of content (descriptive facts vs. dialogue/interaction).
+              The four cards each sit in one quadrant.
+            </p>
             <div className="grid grid-cols-[110px_1fr_1fr] gap-px bg-slate-200 rounded-md overflow-hidden text-xs">
               <div className="bg-white p-2"></div>
               <div className="bg-white p-2 uppercase tracking-wide text-slate-500 text-center">Descriptive</div>
